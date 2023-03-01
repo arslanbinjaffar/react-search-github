@@ -1,9 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MdSearch } from 'react-icons/md';
-// import { GithubContext } from '../context/context';
+import { useGithubContext } from './../context/context';
 const Search = () => {
-  return <h2>search component</h2>;
+  const {request,errors,searchUser,loading,toggleError}=useGithubContext()
+  const [user,setUser]=useState('');
+const handleSubmit=(e)=>{
+  e.preventDefault();
+  if(user){
+    searchUser(user)
+  }
+  if(!user){
+    toggleError(true,"please enter valid username")
+  }
+}
+useEffect(()=>{
+const timer=setTimeout(() => {
+  toggleError()
+},4000);
+return ()=>clearTimeout(timer)
+},[toggleError])
+  return (
+    <section className='section'>
+      <Wrapper>
+        {errors.show && <ErrorWrapper>
+          <p>{errors.msg}</p>
+          </ErrorWrapper>}
+        <form action="" onSubmit={handleSubmit}>
+          <div className="form-control">
+            <MdSearch/>
+            <input type="text" placeholder='search repo' value={user} onChange={(e)=>setUser(e.target.value)}/>
+            {request>0&& !loading &&
+            <button type='submit'>search</button>
+            }
+          </div>
+        </form>
+        <h3>requests : {request} / 60</h3>
+      </Wrapper>
+    </section>
+  )
 };
 
 const Wrapper = styled.div`
