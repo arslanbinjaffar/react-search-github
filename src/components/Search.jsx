@@ -15,10 +15,12 @@ const handleSubmit=(e)=>{
   }
 }
 useEffect(()=>{
-const timer=setTimeout(() => {
-  toggleError()
-},4000);
-return ()=>clearTimeout(timer)
+if(!user){
+  const timer=setTimeout(() => {
+    toggleError()
+  },4000);
+  return ()=>clearTimeout(timer)
+}
 },[toggleError])
   return (
     <section className='section'>
