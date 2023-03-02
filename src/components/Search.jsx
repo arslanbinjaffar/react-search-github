@@ -11,14 +11,14 @@ const handleSubmit=(e)=>{
     searchUser(user)
   }
   if(!user){
-    toggleError(true,"please enter valid username")
+    toggleError(true,"please enter  username")
   }
 }
 useEffect(()=>{
 if(!user){
   const timer=setTimeout(() => {
     toggleError()
-  },4000);
+  },2000);
   return ()=>clearTimeout(timer)
 }
 },[toggleError])
@@ -32,7 +32,7 @@ if(!user){
           <div className="form-control">
             <MdSearch/>
             <input type="text" placeholder='search repo' value={user} onChange={(e)=>setUser(e.target.value)}/>
-            {request>0&& !loading &&
+            {request>0 && !loading &&
             <button type='submit'>search</button>
             }
           </div>

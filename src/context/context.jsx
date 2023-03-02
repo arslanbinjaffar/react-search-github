@@ -22,6 +22,9 @@ export const GithubProvider=({children})=>{
             const response=await axios.get(`${rootUrl}/users/${user}`)
             const data=await response.data;
                 setGithubUser(data);
+                if(!data){
+                    toggleError(true,"please enter correct username")
+                }
                 setLoading(false) 
                 // Repos
                 const {login,followers_url}=data;
@@ -44,8 +47,7 @@ export const GithubProvider=({children})=>{
                 })
 
         } catch (error) {
-         console.log(error)   
-         toggleError(true,"there is no username please enter correct")
+          
          setLoading(false)
         }
         checkRequests();
